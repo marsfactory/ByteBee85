@@ -23,3 +23,5 @@ Poner Arduino como Programmer as ISP , subir skectch de ejemplo, realizar conexi
 
 - Agregar las librerias en caso de ser necesario. 
 Este proyecto es una adaptacion para funcionar con los comonenetes minimos posibles, un pote y un boton, para realizar byebeat en un attiny85. 
+
+NOTA: para subir el codigo por audio, esperar a que el led parpadea (2segundos aprox) y darle upload con un volumen al 70 u 80 %. 
