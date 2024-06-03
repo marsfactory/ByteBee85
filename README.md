@@ -1,8 +1,8 @@
-# ByteBee85
+# ByteBee85 | Circuito Grafico Workshop / Circuit Workshop Circuit
+
+### Fabrica Marciana & Mark Dusjagr, Buenos Aires, 2022. 
 Minimalist low-fi synthesizer on the ATtiny85 running acid bytebeats
 ``The 8bit mixtape Neo fork`` 
-
-Este proyecto es una adaptación para funcionar con los componentes mínimos posibles, un pote y un botón, para realizar bytebeat en un attiny85. / This project is an adaptation to work with the minimum possible components, a pot and a button, to perform bytebeat on an attiny85.
 
 # DIY CAD
 
