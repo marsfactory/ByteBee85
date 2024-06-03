@@ -11,15 +11,11 @@
 #define SONGS_COUNT 7
 #define NUM_SAMPLES 10
 
-int potMap1 = 0 ;
-int potMap2 = 0 ;
-//
 volatile unsigned long t; // long
-volatile unsigned long u; // long
 volatile uint8_t snd; // 0...255
 
-volatile uint8_t pot1; // 0...255 //pin3
-volatile uint8_t pot2; // 0...255 //pin7 use THIS
+volatile uint8_t pot1; // 0...255 //pin3 use THIS
+volatile uint8_t pot2; // 0...255 //pin7 
 volatile uint8_t pot3; // 0...255 //pin2 botones
 
 volatile uint8_t songs = 0;
@@ -71,8 +67,6 @@ void timer_init()
   //PWM SOUND OUTPUT - FIX
   TCCR0A |= (1 << WGM00) | (1 << WGM01); //Fast pwm
 
-  //TCCR0A |= (1<<WGM00) ; //Phase correct pwm
-  //TCCR0A |= (1<<COM0A1); //Clear OC0A/OC0B on Compare Match when up-counting.
   TCCR0A |= (1 << COM0B1); //USE PB1 --> Clear OC0A/OC0B on Compare Match when up-counting.
 
   TCCR0B |= (1 << CS00); //no prescale
@@ -86,19 +80,10 @@ void timer_init()
   TCNT1 = 0; //init count
 
   //TIMER FREQUENCY
-  //TCCR1 |= _BV(CS10); // prescale 1
-  //TCCR1 |= _BV(CS11); // prescale 2
   TCCR1 |= _BV(CS10) | _BV(CS12); // prescale 16
-  //TCCR1 |= _BV(CS11)|_BV(CS12); // prescale 32
-  //TCCR1 |= _BV(CS10)|_BV(CS11)|_BV(CS12); // prescale 64
-  //TCCR1 |= _BV(CS13); // prescale 128
-  //TCCR1 |= _BV(CS10) | _BV(CS13); // prescale 256
 
   //SAMPLE RATE - FIX
   OCR1C = 120; // (16500000/16)/8000 = 128
-  //OCR1C = 45; // (16500000/16)/11025 = 93
-  //OCR1C = 22; // (16500000/16)/22050 = 46
-  //OCR1C = 23; // (16500000/16)/44100 = 23
 
   // babygnusb led pin
   DDRB |= (1 << PB1); //pin connected to led
@@ -112,29 +97,22 @@ int main(void)
   adc_start(); //start adc conversion
 
   // run forever
-  unsigned int loop_timer = 0;
+
   unsigned int btn_timer = 0;
 
   while (1)
   {
-    loop_timer++;
+  
     btn_timer++;
 
     if (btn_timer > 2000)
     {
       uint8_t b = wasButtonPressed(pot3);
 
-      if ( b == BUTTON_RIGHT )   songs-- ;
       if ( b == BUTTON_LEFT )   songs++ ; //Use This
 
       if (songs > SONGS_COUNT) songs = 0;
-      if (songs < 0 ) songs = SONGS_COUNT;
       btn_timer = 0;
-    }
-
-    if (loop_timer > 10000)
-    {
-      loop_timer = 0;
     }
 
     // Promediar valores de pot1
@@ -156,19 +134,19 @@ int main(void)
         snd = pot1_mapped; // Usa el valor mapeado
         break;
       case 2:
-        snd = t >> pot2;
+        snd = t >> pot1;
         break;
       case 3:
         snd = t >> pot1_mapped; // Usa el valor mapeado
         break;
       case 4:
-        snd = t * pot2;
+        snd = t * pot1;
         break;
       case 5:
         snd = t * pot1_mapped; // Usa el valor mapeado
         break;
       case 6:
-        snd = t % pot2;
+        snd = t % pot1;
         break;
       case 7:
         snd = t % pot1_mapped; // Usa el valor mapeado
