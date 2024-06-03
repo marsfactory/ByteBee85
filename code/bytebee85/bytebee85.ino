@@ -6,7 +6,7 @@
 #include <avr/power.h>
 
 // Incluye tu archivo .h
-#include "neolib_core.h"
+//#include "neolib_core.h"
 
 #define SONGS_COUNT 7
 #define NUM_SAMPLES 10
@@ -16,7 +16,7 @@ volatile uint8_t snd; // 0...255
 
 volatile uint8_t pot1; // 0...255 //pin3 use THIS
 volatile uint8_t pot2; // 0...255 //pin7 
-volatile uint8_t pot3; // 0...255 //pin2 botones
+volatile uint8_t pot3; // 0...255 //pin2 botones (ya no se usará como ADC)
 
 volatile uint8_t songs = 0;
 
@@ -27,7 +27,6 @@ volatile uint8_t btn2_previous = 1;
 
 volatile uint8_t adc1 = _BV(ADLAR) | _BV(MUX0); //PB2-ADC1 
 volatile uint8_t adc2 = _BV(ADLAR) | _BV(MUX1); //PB4-ADC2 
-volatile uint8_t adc3 = _BV(ADLAR) | _BV(MUX0) | _BV(MUX1); //PB3-ADC3 
 
 #define ENTER_CRIT()    {byte volatile saved_sreg = SREG; cli()
 #define LEAVE_CRIT()    SREG = saved_sreg;}
@@ -35,6 +34,7 @@ volatile uint8_t adc3 = _BV(ADLAR) | _BV(MUX0) | _BV(MUX1); //PB3-ADC3
 #define true 1
 #define false 0
 
+#define BUTTON_PIN 3
 //button state
 #define BUTTON_NORMAL 0
 #define BUTTON_PRESS 1
@@ -50,7 +50,7 @@ void adc_init()
   ADCSRA |= _BV(ADEN); //adc enable
   ADCSRA |= _BV(ADATE); //auto trigger
   ADCSRA |= _BV(ADPS0) | _BV(ADPS1) | _BV(ADPS2); //prescale 128
-  ADMUX  = adc3;
+  ADMUX  = adc1; // Inicializar con pot1
   ADCSRB = 0;
 }
 
@@ -89,29 +89,51 @@ void timer_init()
   DDRB |= (1 << PB1); //pin connected to led
 }
 
-int main(void)
-{
+void setup() {
   timer_init(); // initialize timer & Pwm
   adc_init(); //init adc
   sei(); //enable global interrupt
   adc_start(); //start adc conversion
 
-  // run forever
+  // Configurar el pin 2 como entrada para el botón
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
+}
 
+uint8_t wasButtonPressed(uint8_t pin)
+{
+  static uint8_t lastState = HIGH;
+  uint8_t currentState = digitalRead(pin);
+
+  if (currentState == LOW && lastState == HIGH) {
+    lastState = currentState;
+    return BUTTON_PRESS;
+  } else if (currentState == HIGH && lastState == LOW) {
+    lastState = currentState;
+    return BUTTON_RELEASE;
+  } else {
+    return BUTTON_NORMAL;
+  }
+}
+
+int main(void)
+{
+  setup();
+  
   unsigned int btn_timer = 0;
 
   while (1)
   {
-  
     btn_timer++;
 
     if (btn_timer > 2000)
     {
-      uint8_t b = wasButtonPressed(pot3);
+      uint8_t b = wasButtonPressed(BUTTON_PIN); // Leer el estado del botón en el pin 2
 
-      if ( b == BUTTON_LEFT )   songs++ ; //Use This
+      if ( b == BUTTON_PRESS ) {
+        songs++;
+        if (songs > SONGS_COUNT) songs = 0;
+      }
 
-      if (songs > SONGS_COUNT) songs = 0;
       btn_timer = 0;
     }
 
@@ -131,25 +153,25 @@ int main(void)
         snd = t * pot1_mapped; 
         break;
       case 1:
-        snd = pot1_mapped; // Usa el valor mapeado
+         snd = t * 5 & (t >> 7) | t * 3 & (t * 4 >> 10); // Usa el valor mapeado
         break;
       case 2:
-        snd = t >> pot1;
+        snd = t * (((t >> 11) & (t >> 8)) & (123 & (t >> 3)));
         break;
       case 3:
-        snd = t >> pot1_mapped; // Usa el valor mapeado
+        snd = t * 4 & (t >> 5) | t * 6 & (t * 2 >> 5) | t * 2 & (t * 7 >> 2);
         break;
       case 4:
-        snd = t * pot1;
+        snd = t * 4 & (t >> 9) | t * 6 & (t * 2 >> 5) | t * pot1_mapped & (t * 7 >> 0);
         break;
       case 5:
-        snd = t * pot1_mapped; // Usa el valor mapeado
+        snd = ((t << 2) | t >> 2 & (t << 4) | t >> 4 | (t / 40));
         break;
       case 6:
-        snd = t % pot1;
+        snd = ((t & 4096) ? ((t * (t ^ t % 255) | (t >> (4 + pot1))) >> 1) : (t >> 8) | ((t & 8192) ? t << 2 : t));
         break;
       case 7:
-        snd = t % pot1_mapped; // Usa el valor mapeado
+        snd = (t & t >> 12) * (t >> (4 + pot1_mapped) | t >> (8 + pot1_mapped))^t >> 6;
         break;
     }
   }
@@ -176,16 +198,12 @@ ISR(ADC_vect)
     firstTime = 0;
   }
   else if (ADMUX == adc1) {
-    pot3 = val;
     ADMUX = adc2;
-  }
-  else if (ADMUX == adc2) {
-    pot2 = val;
-    ADMUX = adc3;
-  }
-  else if (ADMUX == adc3) {
     pot1_accumulator += val;
     pot1_sample_count++;
+  }
+  else if (ADMUX == adc2) {
     ADMUX = adc1;
+    pot2 = val;
   }
 }
