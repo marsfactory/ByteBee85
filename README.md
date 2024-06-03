@@ -1,57 +1,55 @@
-# ByteBee85
+# ByteBee8
 Minimalist low-fi synthesizer on the ATtiny85 running acid bytebeats
-``The 8bit mixtape Neo fork``
+``The 8bit mixtape Neo fork`` 
 
-Este proyecto es una adaptacion para funcionar con los comonenetes minimos posibles, un pote y un boton, para realizar byebeat en un attiny85. 
-
+Este proyecto es una adaptación para funcionar con los componentes mínimos posibles, un pote y un botón, para realizar bytebeat en un attiny85. / This project is an adaptation to work with the minimum possible components, a pot and a button, to perform bytebeat on an attiny85.
 
 # DIY CAD
 
-### Esquema completa con programador 
-[!schematic](https://raw.githubusercontent.com/marsfactory/ByteBee85/main/diycad/esquema.png)
+### Esquema completo con programador / Complete schematic with programmer
+![schematic](https://raw.githubusercontent.com/marsfactory/ByteBee85/main/diycad/esquema.png)
 
-### Esquema simple sin programador
-[!schematic-without-programmer](https://raw.githubusercontent.com/marsfactory/ByteBee85/main/diycad/esquema-sin-programmer.png)
+### Esquema simple sin programador / Simple schematic without programmer
+![schematic-without-programmer](https://raw.githubusercontent.com/marsfactory/ByteBee85/main/diycad/esquema-sin-programmer.png)
 
-### Componentes
-[!componenets](https://raw.githubusercontent.com/marsfactory/ByteBee85/main/diycad/componenetes.png)
+### Componentes / Components
+![components](https://raw.githubusercontent.com/marsfactory/ByteBee85/main/diycad/componenetes.png)
 
-### Pcb Design
-[!pcb-design-process](https://raw.githubusercontent.com/marsfactory/ByteBee85/main/diycad/pcb-process.png)
+### Diseño de PCB / PCB Design
+![pcb-design-process](https://raw.githubusercontent.com/marsfactory/ByteBee85/main/diycad/pcb-process.png)
 
-### Layout to print
-[!pcb-design-process](https://raw.githubusercontent.com/marsfactory/ByteBee85/main/diycad/template-components.png)
+### Diseño para imprimir / Layout to print
+![pcb-design-process](https://raw.githubusercontent.com/marsfactory/ByteBee85/main/diycad/template-components.png)
 
+## Configuración / Configuration
 
-## Configuracion
+### Librerías / Libraries
 
-### Librerias
+- Agregar las librerías en caso de ser necesario. (TODO...) / Add the libraries if necessary. (TODO...)
 
-- Agregar las librerias en caso de ser necesario. (TODO...)
+### Programación a través de audio / Programming via audio
 
-### Programacion a traves de audio
+#### Si el attiny no tiene su bootloader es necesario flashearlo para utilizar el programador a través de audio: / If the attiny doesn't have its bootloader, it needs to be flashed to use the audio programmer:
 
-#### Si el attiny no tiene su bootloader es necesario flasharlo para utilizar el programador a traves de audio:
-
-- Este proyecto utiliza la board del 8bit mixtape neo 
-Se puede agregar al IDE Arduino a traves del gestor de tarjetas, agregando la linea: 
+- Este proyecto utiliza la board del 8bit mixtape neo / This project uses the 8bit mixtape neo board
+Se puede agregar al IDE Arduino a través del gestor de tarjetas, agregando la línea: / It can be added to the Arduino IDE through the board manager, by adding the line:
 `http://8bitmixtape.github.io/package_8bitmixtape_index.json`
 
-- En el 2.0 hay que agregar las boards manualmente. 
+- En el 2.0 hay que agregar las boards manualmente. / In 2.0 the boards must be added manually.
 
-- En windows: 
+- En Windows:
 ``TODO...``
 
-- En linux:
-Poner Arduino como Programmer as ISP , subir skectch de ejemplo, realizar conexiones, tener seleccionado la placa Arduino Uno, ejecutar la terminal 
+- En Linux:
+Poner Arduino como Programmer as ISP, subir sketch de ejemplo, realizar conexiones, tener seleccionada la placa Arduino Uno, ejecutar la terminal / Set Arduino as Programmer as ISP, upload example sketch, make connections, select the Arduino Uno board, run the terminal
 ``sudo apt-install avrdude``  
-
 
 ``avrdude -P /dev/ttyACM0 -b 19200 -c avrisp -p t85 -U efuse:w:0xfe:m -U hfuse:w:0xdd:m -U lfuse:w:0xe1:m``
 
 ``avrdude -v -p attiny85 -c avrisp -P /dev/ttyACM0 -b 19200 -U flash:w:/home/arsat/.arduino15/packages/8BitMixtape/hardware/avr/0.0.28/bootloaders/tinyaudioboot/AudioBootAttiny85_AudioPB3_LEDPB1.hex:i`` 
 
+NOTA: para subir el código por audio, esperar a que el LED parpadee (2 segundos aprox) y darle upload con un volumen al 70 u 80 %. / NOTE: to upload the code via audio, wait for the LED to blink (approximately 2 seconds) and hit upload with a volume of 70 to 80%.
 
-NOTA: para subir el codigo por audio, esperar a que el led parpadea (2segundos aprox) y darle upload con un volumen al 70 u 80 %. 
+### Programación estándar para el attiny85 / Standard programming for the attiny85
 
-### Programacion estandar para el attiny85
+TODO...
