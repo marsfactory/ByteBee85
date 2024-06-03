@@ -7,22 +7,20 @@ Este proyecto es una adaptacion para funcionar con los comonenetes minimos posib
 
 # DIY CAD
 
-
-
 ### Esquema completa con programador 
-[!schematic](diycad/esquema.png)
+[!schematic](https://raw.githubusercontent.com/marsfactory/ByteBee85/main/diycad/esquema.png)
 
 ### Esquema simple sin programador
-[!schematic-without-programmer](diycad/esquema-sin-programmer.png)
+[!schematic-without-programmer](https://raw.githubusercontent.com/marsfactory/ByteBee85/main/diycad/esquema-sin-programmer.png)
 
 ### Componentes
-[!componenets](diycad/componenetes.png)
+[!componenets](https://raw.githubusercontent.com/marsfactory/ByteBee85/main/diycad/componenetes.png)
 
 ### Pcb Design
-[!pcb-design-process](diycad/pcb-process.png)
+[!pcb-design-process](https://raw.githubusercontent.com/marsfactory/ByteBee85/main/diycad/pcb-process.png)
 
 ### Layout to print
-[!pcb-design-process](diycad/template-components.png)
+[!pcb-design-process](https://raw.githubusercontent.com/marsfactory/ByteBee85/main/diycad/template-components.png)
 
 
 ## Configuracion
