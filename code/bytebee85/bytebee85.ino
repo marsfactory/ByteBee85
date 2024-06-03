@@ -16,12 +16,8 @@ volatile uint8_t snd; // 0...255
 
 volatile uint8_t pot1; // 0...255 //pin3 use THIS
 volatile uint8_t pot2; // 0...255 //pin7 
-volatile uint8_t pot3; // 0...255 //pin2 botones (ya no se usará como ADC)
 
 volatile uint8_t songs = 0;
-
-volatile uint8_t btn1_previous = 1;
-volatile uint8_t btn2_previous = 1;
 
 //ADMUX ADC
 
