@@ -21,6 +21,18 @@ Este proyecto es una adaptación para funcionar con los componentes mínimos pos
 ### Diseño para imprimir / Layout to print
 ![pcb-design-process](https://raw.githubusercontent.com/marsfactory/ByteBee85/main/diycad/template-components.png)
 
+
+### Si no quieres usar el método DIYCAD para realizar tu PCB, puedes utilizar esta placa para producción casera. / If you don't want to use the DIYCAD method to make your PCB, you can use this board for homemade production.
+
+#### PCB
+![pcb](https://raw.githubusercontent.com/marsfactory/ByteBee85/main/hardware/images/schematic.png)
+
+#### LAYOUT
+![layout](https://raw.githubusercontent.com/marsfactory/ByteBee85/main/hardware/production/layout.png)
+
+#### SCHEMATIC
+![layout](https://raw.githubusercontent.com/marsfactory/ByteBee85/main/hardware/production/layout.png)
+
 ## Configuración / Configuration
 
 ### Librerías / Libraries
