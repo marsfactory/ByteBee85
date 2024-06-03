@@ -1,4 +1,4 @@
-# ByteBee8
+# ByteBee85
 Minimalist low-fi synthesizer on the ATtiny85 running acid bytebeats
 ``The 8bit mixtape Neo fork`` 
 
@@ -25,13 +25,13 @@ Este proyecto es una adaptación para funcionar con los componentes mínimos pos
 ### Si no quieres usar el método DIYCAD para realizar tu PCB, puedes utilizar esta placa para producción casera. / If you don't want to use the DIYCAD method to make your PCB, you can use this board for homemade production.
 
 #### PCB
-![pcb](https://raw.githubusercontent.com/marsfactory/ByteBee85/main/hardware/images/schematic.png)
+![pcb](https://raw.githubusercontent.com/marsfactory/ByteBee85/main/hardware/production/pcb.png)
 
 #### LAYOUT
 ![layout](https://raw.githubusercontent.com/marsfactory/ByteBee85/main/hardware/production/layout.png)
 
 #### SCHEMATIC
-![layout](https://raw.githubusercontent.com/marsfactory/ByteBee85/main/hardware/production/layout.png)
+![layout](https://raw.githubusercontent.com/marsfactory/ByteBee85/main/hardware/images/schematic.jpg)
 
 ## Configuración / Configuration
 
